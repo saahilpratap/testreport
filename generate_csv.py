@@ -19,3 +19,6 @@ for pull_request in pull_requests:
 pull_request_data["Rebase Status"] = ""
 
 pull_request_data.loc[pull_request_data["Mergeable"] == True, "Rebase Status"] = "Rebased"
+pull_request_data.loc[pull_request_data["Mergeable"] == False, "Rebase Status"] = "Not Rebasing"
+
+pull_request_data.to_csv("yup.csv", index=False)
