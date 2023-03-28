@@ -28,7 +28,6 @@ jobs:
           git config --local user.name "saahilpratap"
           git add yup.csv
           git commit -m "Add generated CSV file"
-          git remote add origin https://github.com/saahilpratap/testreport.git
           git push origin main
   
         env:
