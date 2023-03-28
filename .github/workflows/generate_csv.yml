@@ -24,10 +24,11 @@ jobs:
           
       - name: Commit and push CSV file to main branch
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "saahilrawatbwr@gmail.com"
+          git config --local user.name "saahilpratap"
           git add yup.csv
           git commit -m "Add generated CSV file"
+          git remote add origin https://github.com/saahilpratap/testreport.git
           git push origin main
   
         env:
