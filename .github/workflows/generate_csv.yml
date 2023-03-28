@@ -22,13 +22,19 @@ jobs:
         run: |
           python generate_csv.py
           
-      - name: Commit and push CSV file to main branch
+      - name: Set up Git
         run: |
           git config --local user.email "saahilrawatbwr@gmail.com"
           git config --local user.name "saahilpratap"
-          git add yup.csv
-          git commit -m "Add generated CSV file"
-          git push origin main
-  
+          git config --global credential.helper store
+          echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" > ~/.git-credentials
+          chmod 0600 ~/.git-credentials
+          
+      - name: Commit and push CSV file to main branch
+        run: |
+            git add yup.csv
+            git commit -m "Add generated CSV file"
+            git push origin main
+          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
