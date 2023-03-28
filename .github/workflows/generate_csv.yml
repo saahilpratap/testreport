@@ -2,8 +2,8 @@ name: Generate CSV file
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "* * * * *"
+ # schedule:
+ #   - cron: "* * * * *"
 
 jobs:
   build:
