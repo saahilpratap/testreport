@@ -1,40 +1,32 @@
-name: Generate CSV file
+name: Generate CSV File
 
 on:
-  workflow_dispatch:
- # schedule:
- #   - cron: "* * * * *"
+  schedule:
+    - cron: '0 0 * * *' # Run every day at midnight
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.8"
-      - name: Install dependencies
-        run: |
-          pip install pandas PyGithub
-      - name: Generate CSV file
-        run: |
-          python generate_csv.py
-          
-      - name: Set up Git
-        run: |
-          git config --local user.email "saahilrawatbwr@gmail.com"
-          git config --local user.name "saahilpratap"
-          git config --global credential.helper store
-          echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" > ~/.git-credentials
-          chmod 0600 ~/.git-credentials
-          
-      - name: Commit and push CSV file to main branch
-        run: |
-            git add yup.csv
-            git commit -m "Add generated CSV file"
-            git push origin main
-          
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Python environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install required packages
+      run: |
+        pip install pandas
+        pip install PyGithub
+
+    - name: Run Python script
+      run: python generate_csv.py
+
+    - name: Save CSV file as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: CSV File
+        path: yup.csv
