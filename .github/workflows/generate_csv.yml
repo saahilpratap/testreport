@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: DESKTOP-LLFDLDL
     steps:
       - name: Checkout
         uses: actions/checkout@v2
