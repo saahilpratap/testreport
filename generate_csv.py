@@ -2,7 +2,7 @@ import pandas as pd
 from github import Github
 import os
 
-g = Github(os.getenv('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'))
+g = Github(os.getenv('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'))
 
 repo = g.get_repo("saahilpratap/testreport")
 
