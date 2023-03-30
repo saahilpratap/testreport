@@ -28,14 +28,14 @@ jobs:
           name: csv-artifact
           path: yup.csv
           
-      - name: Set up Git
-        run: |
-          git config --local user.email "saahilrawatbwr@gmail.com"
-          git config --local user.name "saahilpratap"
-          git config --global credential.helper store
-          echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" > ~/.git-credentials
-          chmod 0600 ~/.git-credentials
-          
+      # - name: Set up Git
+      #   run: |
+      #     git config --local user.email "saahilrawatbwr@gmail.com"
+      #     git config --local user.name "saahilpratap"
+      #     git config --global credential.helper store
+      #     echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" > ~/.git-credentials
+      #     chmod 0600 ~/.git-credentials
+      
       # - name: Commit and push CSV file to main branch
       #   run: |
       #       git add yup.csv
