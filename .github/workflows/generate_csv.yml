@@ -28,18 +28,5 @@ jobs:
           name: csv-artifact
           path: yup.csv
 
-      - name: Notify Teams
-        uses: microsoft/teams-notification@v1
-        with:
-          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
-          message-type: text
-          title: "New CSV file generated"
-          message: "A new CSV file has been generated and uploaded to GitHub."
-          summary: "CSV file generated and uploaded to GitHub."
-          theme-color: "#0078D7"
-          actions:
-            - label: "Download CSV file"
-              url: ${{ steps.upload.outputs.artifact_url }}
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
