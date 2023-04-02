@@ -1,9 +1,9 @@
-name: Generate CSV file
+name: Generate CSV file and Notify Teams
 
 on:
   workflow_dispatch:
- # schedule:
- #   - cron: "* * * * *"
+  # schedule:
+  #   - cron: "* * * * *"
 
 jobs:
   build:
@@ -11,13 +11,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: "3.8"
+          
       - name: Install dependencies
         run: |
           pip install pandas PyGithub
+      
       - name: Generate CSV file
         run: |
           python generate_csv.py
@@ -27,20 +30,19 @@ jobs:
         with:
           name: csv-artifact
           path: yup.csv
-          
-      # - name: Set up Git
-      #   run: |
-      #     git config --local user.email "saahilrawatbwr@gmail.com"
-      #     git config --local user.name "saahilpratap"
-      #     git config --global credential.helper store
-      #     echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" > ~/.git-credentials
-      #     chmod 0600 ~/.git-credentials
       
-      # - name: Commit and push CSV file to main branch
-      #   run: |
-      #       git add yup.csv
-      #       git commit -m "Add generated CSV file"
-      #       git push origin main
-          
+      - name: Notify Teams
+        uses: microsoft/teams-notification@v1
+        with:
+          webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          message-type: text
+          title: "New CSV file generated"
+          message: "A new CSV file has been generated and uploaded to GitHub."
+          summary: "CSV file generated and uploaded to GitHub."
+          theme-color: "#0078D7"
+          actions:
+            - label: "Download CSV file"
+              url: ${{ steps.upload.outputs.artifact_url }}
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
