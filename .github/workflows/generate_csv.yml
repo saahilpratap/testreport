@@ -1,0 +1,32 @@
+name: Generate CSV file
+
+on:
+ workflow_dispatch:
+#  schedule:
+#    - cron: "*/5 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: Install dependencies
+        run: |
+          pip install pandas PyGithub
+      - name: Generate CSV file
+        run: |
+          python generate_csv.py
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: csv-artifact
+          path: yup.csv
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
